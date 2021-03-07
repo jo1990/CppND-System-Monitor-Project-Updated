@@ -318,7 +318,7 @@ long LinuxParser::UpTime(int pid)
       while (linestream  >> value) {
         if(count == 21)
         {
-          return atol(value.c_str());
+          return UpTime()- atol(value.c_str())/sysconf(_SC_CLK_TCK);
         }
         else
         {

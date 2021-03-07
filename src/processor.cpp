@@ -13,8 +13,6 @@ float Processor::Utilization()
     long cpu_irq;
     long cpu_softirq;
     long cpu_steal;
-    long cpu_guest;
-    long cpu_guest_nice;
     float CPU_Percentage;
 
     std::vector<std::string> cpu_data;
@@ -45,23 +43,19 @@ float Processor::Utilization()
     cpu_steal= std::stoi(cpu_data.back());
     cpu_data.pop_back();
 
-    cpu_guest = std::stoi(cpu_data.back());
-    cpu_data.pop_back();
-
-    cpu_guest_nice = std::stoi(cpu_data.back());
-    cpu_data.pop_back();
+    
 
 
 
-    long idle = cpu_idle + cpu_iowait;
+    const long idle = cpu_idle + cpu_iowait;
 
 
-    long nonIDLE = cpu_user + cpu_nice + cpu_system + cpu_irq + cpu_softirq + cpu_steal;
+    const long nonIDLE = cpu_user + cpu_nice + cpu_system + cpu_irq + cpu_softirq + cpu_steal;
 
-    long total = idle + nonIDLE;
+    const long total = idle + nonIDLE;
 
 
-    CPU_Percentage =(total - idle)/(float)total;
+    CPU_Percentage =(total - idle)/static_cast<float>( total);
 
     return CPU_Percentage; 
 }

@@ -1,5 +1,7 @@
 #include <string>
 #include <chrono>
+#include <iomanip>
+#include <iostream>
 
 #include "format.h"
 
@@ -12,10 +14,10 @@ string Format::ElapsedTime(long seconds)
 { 
 
     std::chrono::seconds sec(seconds);
-    string str_time;
+    std::stringstream str_time;
 
-	str_time =std::to_string(duration_cast<std::chrono::hours>(sec).count())
-                +":"+ std::to_string(duration_cast<std::chrono::minutes>(sec).count() % 60)
-                + ":" +std::to_string(sec.count() % 60);
-	return str_time;
+	str_time << std::setfill('0') <<  std::setw(2) << std::to_string(duration_cast<std::chrono::hours>(sec).count())
+                <<":"<<std::setfill('0') <<  std::setw(2)<<std::to_string(duration_cast<std::chrono::minutes>(sec).count() % 60)
+                << ":" << std::setfill('0') <<  std::setw(2)<<std::to_string(sec.count() % 60);
+	return str_time.str();
 }
